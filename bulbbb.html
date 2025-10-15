@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Multiple Bulbs</title>
+  <style>
+    .bulb {
+      width: 80px;
+      height: 80px;
+      margin: 10px;
+      border-radius: 50%;
+      background-color: gray;
+      display: inline-block;
+      box-shadow: 0 0 10px #00000050;
+      transition: background-color 0.3s, box-shadow 0.3s;
+    }
+
+    .on {
+      background-color: yellow;
+      box-shadow: 0 0 30px gold;
+    }
+
+    .controls {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    button {
+      margin: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2 style="text-align:center;">💡 Multiple Bulbs Control</h2>
+
+  <div id="bulbs" style="text-align:center;">
+    <div class="bulb" id="bulb1"></div>
+    <div class="bulb" id="bulb2"></div>
+    <div class="bulb" id="bulb3"></div>
+  </div>
+
+  <div class="controls">
+    <button onclick="toggleBulb('bulb1')">Toggle Bulb 1</button>
+    <button onclick="toggleBulb('bulb2')">Toggle Bulb 2</button>
+    <button onclick="toggleBulb('bulb3')">Toggle Bulb 3</button>
+    <br>
+    <button onclick="turnAllOn()">Turn All ON</button>
+    <button onclick="turnAllOff()">Turn All OFF</button>
+  </div>
+
+  <script>
+    function toggleBulb(id) {
+      const bulb = document.getElementById(id);
+      bulb.classList.toggle('on');
+    }
+
+    function turnAllOn() {
+      document.querySelectorAll('.bulb').forEach(bulb => bulb.classList.add('on'));
+    }
+
+    function turnAllOff() {
+      document.querySelectorAll('.bulb').forEach(bulb => bulb.classList.remove('on'));
+    }
+  </script>
+
+</body>
+</html>

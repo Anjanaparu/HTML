@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Calendar</title>
+<script language="javascript">
+// Function to write the table header for a day
+function day_title(day_name)
+{
+    // Fix: Removed extra </b> tag, changed bgcolor to be more accessible on dark background
+    document.write("<td align='center' width='30' style='background-color:#4CAF50; color:white; font-weight:bold;'>"+day_name+"</td>");
+}
+
+// Function to fill the calendar table for a given month
+function fill_table(month, month_len, start_day_of_month)
+{
+    var day=1;
+    // Fix: Added 'year' to the document.write for the header, made font bold
+    document.write("<table border='1' cellspacing='2' cellpadding='3' style='border-collapse:collapse;'>");
+    document.write("<tr><td colspan='7' align='center' style='background-color:#FFEB3B; font-weight:bold;'>"+month+" "+year+"</td></tr>");
+    document.write("<tr>");
+    
+    // Fix: Corrected function name from 'day_tittle' to 'day_title'
+    day_title("SUN");
+    day_title("MON");
+    day_title("TUE");
+    day_title("WED");
+    day_title("THU");
+    day_title("FRI");
+    day_title("SAT");
+    document.write("</tr><tr>");
+    
+    // Write empty cells for days before the 1st of the month
+    // start_day_of_month is 1 for Sunday, 2 for Monday, ..., 7 for Saturday
+    for(var i=1; i < start_day_of_month; i++)
+    {
+        document.write("<td></td>");
+    }
+    
+    // Write the first row of days
+    var cells_written = start_day_of_month - 1; // Number of empty cells
+    var remaining_in_row = 7 - cells_written; // Number of day cells to write in first row
+    
+    for(var i=1; i <= remaining_in_row && day <= month_len; i++)
+    {
+        document.write("<td align='center' style='background-color:#FF9800;'>"+day+"</td>");
+        day++;
+    }
+    document.write("</tr>");
+
+    // Write the remaining weeks/days
+    while(day <= month_len)
+    {
+        document.write("<tr>"); // Start a new row
+        for(var i=1; i<=7 && day<=month_len; i++)
+        {
+            document.write("<td align='center' style='background-color:#FF9800;'>"+day+"</td>");
+            day++;
+        }
+        document.write("</tr>"); // End the current row
+    }
+    
+    // Calculate the start day for the next month
+    var next_start_day = (start_day_of_month - 1 + month_len) % 7; // 0 for Sunday, 6 for Saturday
+    return next_start_day + 1; // Return 1 for Sunday, 7 for Saturday
+}
+
+// Prompt the user for the year
+var year = prompt("Enter the Year","2020");
+
+// Display the year in the h1 tag on the page
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById("yearDisplay").textContent = year;
+});
+
+// Calculate the start day for January (1 for Sunday, 2 for Monday, ..., 7 for Saturday)
+var today = new Date("January 1, " + year);
+var start_day = today.getDay() + 1; // today.getDay() returns 0 (Sunday) to 6 (Saturday)
+
+// Fill the calendar tables
+var next_start_day; // Variable to hold the starting day of the next month
+
+// January
+next_start_day = fill_table("January", 31, start_day);
+
+// February
+var feb_days = (year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0)) ? 29 : 28; // Proper leap year check
+next_start_day = fill_table("February", feb_days, next_start_day);
+
+// March
+next_start_day = fill_table("March", 31, next_start_day);
+
+// April
+next_start_day = fill_table("April", 30, next_start_day);
+
+// May
+next_start_day = fill_table("May", 31, next_start_day);
+
+// June
+next_start_day = fill_table("June", 30, next_start_day);
+
+// July
+next_start_day = fill_table("July", 31, next_start_day);
+
+// August
+next_start_day = fill_table("August", 31, next_start_day);
+
+// September
+next_start_day = fill_table("September", 30, next_start_day);
+
+// October
+next_start_day = fill_table("October", 31, next_start_day);
+
+// November
+next_start_day = fill_table("November", 30, next_start_day);
+
+// December
+// Fix: Added opening double quote for "December"
+fill_table("December", 31, next_start_day);
+
+</script>
+</head>
+<body>
+<h1>Calendar for Year: <span id="yearDisplay"></span></h1>
+</body>
+</html>
